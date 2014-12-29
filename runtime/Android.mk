@@ -398,14 +398,20 @@ $$(ENUM_OPERATOR_OUT_GEN): $$(GENERATED_SRC_DIR)/%_operator_out.cc : $(LOCAL_PAT
     # TODO: Loop with ifeq, ART_TARGET_CLANG
     ifneq ($$(ART_TARGET_CLANG_$$(TARGET_ARCH)),true)
       LOCAL_SRC_FILES_$$(TARGET_ARCH) += $$(LIBART_GCC_ONLY_SRC_FILES)
+      LOCAL_CC := $$(TARGET_TOOLCHAIN_ROOT)/../arm-linux-androideabi-4.8-sm/bin/arm-linux-androideabi-gcc$$(HOST_EXECUTABLE_SUFFIX)
+      LOCAL_CXX := $$(TARGET_TOOLCHAIN_ROOT)/../arm-linux-androideabi-4.8-sm/bin/arm-linux-androideabi-g++$$(HOST_EXECUTABLE_SUFFIX)
     endif
     ifneq ($$(ART_TARGET_CLANG_$$(TARGET_2ND_ARCH)),true)
       LOCAL_SRC_FILES_$$(TARGET_2ND_ARCH) += $$(LIBART_GCC_ONLY_SRC_FILES)
+      LOCAL_CC := $$(TARGET_TOOLCHAIN_ROOT)/../arm-linux-androideabi-4.8-sm/bin/arm-linux-androideabi-gcc$$(HOST_EXECUTABLE_SUFFIX)
+      LOCAL_CXX := $$(TARGET_TOOLCHAIN_ROOT)/../arm-linux-androideabi-4.8-sm/bin/arm-linux-androideabi-g++$$(HOST_EXECUTABLE_SUFFIX)
     endif
   else # host
     LOCAL_CLANG := $$(ART_HOST_CLANG)
     ifeq ($$(ART_HOST_CLANG),false)
       LOCAL_SRC_FILES += $$(LIBART_GCC_ONLY_SRC_FILES)
+      LOCAL_CC := $$(TARGET_TOOLCHAIN_ROOT)/../arm-linux-androideabi-4.8-sm/bin/arm-linux-androideabi-gcc$$(HOST_EXECUTABLE_SUFFIX)
+      LOCAL_CXX := $$(TARGET_TOOLCHAIN_ROOT)/../arm-linux-androideabi-4.8-sm/bin/arm-linux-androideabi-g++$$(HOST_EXECUTABLE_SUFFIX)
     endif
     LOCAL_CFLAGS += $$(ART_HOST_CFLAGS)
     ifeq ($$(art_ndebug_or_debug),debug)
@@ -416,6 +422,7 @@ $$(ENUM_OPERATOR_OUT_GEN): $$(GENERATED_SRC_DIR)/%_operator_out.cc : $(LOCAL_PAT
       LOCAL_CFLAGS += $$(ART_HOST_NON_DEBUG_CFLAGS)
     endif
   endif
+  
 
   LOCAL_C_INCLUDES += $$(ART_C_INCLUDES)
   LOCAL_C_INCLUDES += art/sigchainlib
